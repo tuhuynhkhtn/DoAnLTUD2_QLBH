@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9B74BD68-0B06-4E18-9296-D18F0CF54BAD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>V1</RootNamespace>
+    <AssemblyName>V1</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Commands\ButtonBuyDetailCmd.cs" />
+    <Compile Include="Commands\ButtonBuyListCmd.cs" />
+    <Compile Include="Commands\ButtonDetailCmd.cs" />
+    <Compile Include="Commands\ButtonLeftCatCmd.cs" />
+    <Compile Include="Commands\ButtonLeftProCmd.cs" />
+    <Compile Include="Model\Cart.cs" />
+    <Compile Include="Model\ProInfo.cs" />
+    <Compile Include="Page\PageListProduct.cs" />
+    <Compile Include="UC\UCCart.xaml.cs">
+      <DependentUpon>UCCart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCDetail.xaml.cs">
+      <DependentUpon>UCDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCLeft.xaml.cs">
+      <DependentUpon>UCLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCListProductByCat.xaml.cs">
+      <DependentUpon>UCListProductByCat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCListProductByNSX.xaml.cs">
+      <DependentUpon>UCListProductByNSX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCTop.xaml.cs">
+      <DependentUpon>UCTop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ultilities\AddHelper.cs" />
+    <Compile Include="Ultilities\Commands.cs" />
+    <Compile Include="Ultilities\HtmlToText.cs" />
+    <Compile Include="Ultilities\ImgPathConverter.cs" />
+    <Compile Include="Ultilities\PassThroughConverter.cs" />
+    <Compile Include="Ultilities\PriceFormat.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="UC\UCCart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCLeft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCListProductByCat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCListProductByNSX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCTop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\Category.cs">
+      <DependentUpon>QLBHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NhaSanXuat.cs">
+      <DependentUpon>QLBHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Order.cs">
+      <DependentUpon>QLBHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrderDetail.cs">
+      <DependentUpon>QLBHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Product.cs">
+      <DependentUpon>QLBHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\QLBHModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QLBHModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\QLBHModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QLBHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\QLBHModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QLBHModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\User.cs">
+      <DependentUpon>QLBHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EntityDeploy Include="Model\QLBHModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>QLBHModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\QLBHModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QLBHModel.edmx</DependentUpon>
+      <LastGenOutput>QLBHModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Model\QLBHModel.edmx.diagram">
+      <DependentUpon>QLBHModel.edmx</DependentUpon>
+    </None>
+    <None Include="Model\QLBHModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QLBHModel.edmx</DependentUpon>
+      <LastGenOutput>QLBHModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\sp\10\10.jpg" />
+    <Resource Include="imgs\sp\10\10_thumbs.jpg" />
+    <Resource Include="imgs\sp\10\main.jpg" />
+    <Resource Include="imgs\sp\10\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\11\11.jpg" />
+    <Resource Include="imgs\sp\11\11_thumbs.jpg" />
+    <Resource Include="imgs\sp\11\main.jpg" />
+    <Resource Include="imgs\sp\11\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\12\12.jpg" />
+    <Resource Include="imgs\sp\12\12_thumbs.jpg" />
+    <Resource Include="imgs\sp\12\main.jpg" />
+    <Resource Include="imgs\sp\12\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\13\13.jpg" />
+    <Resource Include="imgs\sp\13\13_thumbs.jpg" />
+    <Resource Include="imgs\sp\13\main.jpg" />
+    <Resource Include="imgs\sp\13\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\14\14.jpg" />
+    <Resource Include="imgs\sp\14\14_thumbs.jpg" />
+    <Resource Include="imgs\sp\14\main.jpg" />
+    <Resource Include="imgs\sp\14\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\15\15.jpg" />
+    <Resource Include="imgs\sp\15\15_thumbs.jpg" />
+    <Resource Include="imgs\sp\15\main.jpg" />
+    <Resource Include="imgs\sp\15\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\16\16.jpg" />
+    <Resource Include="imgs\sp\16\16_thumbs.jpg" />
+    <Resource Include="imgs\sp\16\main.jpg" />
+    <Resource Include="imgs\sp\16\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\17\17.jpg" />
+    <Resource Include="imgs\sp\17\17_thumbs.jpg" />
+    <Resource Include="imgs\sp\17\main.jpg" />
+    <Resource Include="imgs\sp\17\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\18\18.jpg" />
+    <Resource Include="imgs\sp\18\18_thumbs.jpg" />
+    <Resource Include="imgs\sp\18\main.jpg" />
+    <Resource Include="imgs\sp\18\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\19\19.jpg" />
+    <Resource Include="imgs\sp\19\19_thumbs .jpg" />
+    <Resource Include="imgs\sp\19\main.jpg" />
+    <Resource Include="imgs\sp\19\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\1\1.jpg" />
+    <Resource Include="imgs\sp\1\1_thumbs.jpg" />
+    <Resource Include="imgs\sp\1\main.jpg" />
+    <Resource Include="imgs\sp\1\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\20\20.jpg" />
+    <Resource Include="imgs\sp\20\20_thumbs.jpg" />
+    <Resource Include="imgs\sp\20\main.jpg" />
+    <Resource Include="imgs\sp\20\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\21\21.jpg" />
+    <Resource Include="imgs\sp\21\21_thumbs.jpg" />
+    <Resource Include="imgs\sp\21\main.jpg" />
+    <Resource Include="imgs\sp\21\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\22\22.jpg" />
+    <Resource Include="imgs\sp\22\22_thumbs.jpg" />
+    <Resource Include="imgs\sp\22\main.jpg" />
+    <Resource Include="imgs\sp\22\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\23\23.jpg" />
+    <Resource Include="imgs\sp\23\23_thumbs.jpg" />
+    <Resource Include="imgs\sp\23\main.jpg" />
+    <Resource Include="imgs\sp\23\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\24\24.jpg" />
+    <Resource Include="imgs\sp\24\24_thumbs.jpg" />
+    <Resource Include="imgs\sp\24\main.jpg" />
+    <Resource Include="imgs\sp\24\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\25\25.jpg" />
+    <Resource Include="imgs\sp\25\25_thumbs.jpg" />
+    <Resource Include="imgs\sp\25\main.jpg" />
+    <Resource Include="imgs\sp\25\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\26\26.jpg" />
+    <Resource Include="imgs\sp\26\26_thumbs.jpg" />
+    <Resource Include="imgs\sp\26\main.jpg" />
+    <Resource Include="imgs\sp\26\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\27\27.jpg" />
+    <Resource Include="imgs\sp\27\27_thumbs.jpg" />
+    <Resource Include="imgs\sp\27\main.jpg" />
+    <Resource Include="imgs\sp\27\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\28\28.jpg" />
+    <Resource Include="imgs\sp\28\28_thumbs.jpg" />
+    <Resource Include="imgs\sp\28\main.jpg" />
+    <Resource Include="imgs\sp\28\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\29\29.jpg" />
+    <Resource Include="imgs\sp\29\29_thumbs.jpg" />
+    <Resource Include="imgs\sp\29\main.jpg" />
+    <Resource Include="imgs\sp\29\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\2\2.jpg" />
+    <Resource Include="imgs\sp\2\2_thumbs.jpg" />
+    <Resource Include="imgs\sp\2\main.jpg" />
+    <Resource Include="imgs\sp\2\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\30\30.jpg" />
+    <Resource Include="imgs\sp\30\30_thumbs.jpg" />
+    <Resource Include="imgs\sp\30\main.jpg" />
+    <Resource Include="imgs\sp\30\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\3\3.jpg" />
+    <Resource Include="imgs\sp\3\3_thumbs.jpg" />
+    <Resource Include="imgs\sp\3\main.jpg" />
+    <Resource Include="imgs\sp\3\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\43\43.jpg" />
+    <Resource Include="imgs\sp\43\43_thumbs.jpg" />
+    <Resource Include="imgs\sp\43\main.jpg" />
+    <Resource Include="imgs\sp\43\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\44\44.jpg" />
+    <Resource Include="imgs\sp\44\44_thumbs.jpg" />
+    <Resource Include="imgs\sp\44\main.jpg" />
+    <Resource Include="imgs\sp\44\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\45\45.jpg" />
+    <Resource Include="imgs\sp\45\45_thumbs.jpg" />
+    <Resource Include="imgs\sp\45\main.jpg" />
+    <Resource Include="imgs\sp\45\mai_thumbs.jpg" />
+    <Resource Include="imgs\sp\46\46.jpg" />
+    <Resource Include="imgs\sp\46\46_thumbs.jpg" />
+    <Resource Include="imgs\sp\46\main.jpg" />
+    <Resource Include="imgs\sp\46\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\47\47.jpg" />
+    <Resource Include="imgs\sp\47\47_thumbs.jpg" />
+    <Resource Include="imgs\sp\47\main.jpg" />
+    <Resource Include="imgs\sp\47\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\4\4.jpg" />
+    <Resource Include="imgs\sp\4\4_thumbs.jpg" />
+    <Resource Include="imgs\sp\4\main.jpg" />
+    <Resource Include="imgs\sp\4\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\50\50.jpg" />
+    <Resource Include="imgs\sp\50\50_thumbs.jpg" />
+    <Resource Include="imgs\sp\50\main.jpg" />
+    <Resource Include="imgs\sp\50\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\52\52.jpg" />
+    <Resource Include="imgs\sp\52\52_thumbs.jpg" />
+    <Resource Include="imgs\sp\52\main.jpg" />
+    <Resource Include="imgs\sp\52\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\53\53.jpg" />
+    <Resource Include="imgs\sp\53\53_thumbs.jpg" />
+    <Resource Include="imgs\sp\53\main.jpg" />
+    <Resource Include="imgs\sp\53\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\54\54.jpg" />
+    <Resource Include="imgs\sp\54\54_thumbs.jpg" />
+    <Resource Include="imgs\sp\54\main.jpg" />
+    <Resource Include="imgs\sp\54\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\55\55.jpg" />
+    <Resource Include="imgs\sp\55\55_thumbs.jpg" />
+    <Resource Include="imgs\sp\55\main.jpg" />
+    <Resource Include="imgs\sp\55\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\5\5.jpg" />
+    <Resource Include="imgs\sp\5\5_thumbs.jpg" />
+    <Resource Include="imgs\sp\5\main.jpg" />
+    <Resource Include="imgs\sp\5\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\6\6.jpg" />
+    <Resource Include="imgs\sp\6\6_thumbs.jpg" />
+    <Resource Include="imgs\sp\6\main.jpg" />
+    <Resource Include="imgs\sp\6\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\7\7.jpg" />
+    <Resource Include="imgs\sp\7\7_thumbs.jpg" />
+    <Resource Include="imgs\sp\7\main.jpg" />
+    <Resource Include="imgs\sp\7\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\8\8.jpg" />
+    <Resource Include="imgs\sp\8\8_thumbs.jpg" />
+    <Resource Include="imgs\sp\8\main.jpg" />
+    <Resource Include="imgs\sp\8\main_thumbs.jpg" />
+    <Resource Include="imgs\sp\9\9.jpg" />
+    <Resource Include="imgs\sp\9\9_thumbs.jpg" />
+    <Resource Include="imgs\sp\9\main.jpg" />
+    <Resource Include="imgs\sp\9\main_thumbs.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="icon\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

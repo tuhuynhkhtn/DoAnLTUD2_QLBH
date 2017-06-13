@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c9a0756b55394e408b818ce0cb85a39a" Name="Diagram1">
+        <EntityTypeShape EntityType="QLBH1Model.Category" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLBH1Model.NhaSanXuat" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLBH1Model.OrderDetail" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLBH1Model.Order" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLBH1Model.Product" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLBH1Model.User" Width="1.5" PointX="5.75" PointY="7.25" IsExpanded="true" />
+        <AssociationConnector Association="QLBH1Model.FK__Products__CatID__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="QLBH1Model.FK__Products__IDNhaS__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="QLBH1Model.FK__OrderDeta__Order__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="QLBH1Model.FK__OrderDeta__ProID__2E1BDC42" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
