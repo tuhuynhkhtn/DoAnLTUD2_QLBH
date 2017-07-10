@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="V1.UC.UCLeft"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:u="clr-namespace:V1.Ultilities"
+             xmlns:local="clr-namespace:V1.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="250">
+    <UserControl.Resources>
+        <DataTemplate x:Key="CatTemplate" DataType="{x:Type local:Category}">
+            <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Button Grid.Column="1" Margin="3" Content="{Binding CatName}" HorizontalAlignment="Left" VerticalAlignment="Center" Command="u:Commands.ButtonLeftCatCmd" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Tag="{Binding CatID}" Width="150" />
+            </WrapPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ProTemplate" DataType="{x:Type local:NhaSanXuat}">
+            <WrapPanel>
+                <Button Grid.Column="1" Margin="3" Content="{Binding TenNhaSanXuat}" HorizontalAlignment="Right"  Command="u:Commands.ButtonLeftProCmd" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Tag="{Binding IDNhaSanXuat}" />
+            </WrapPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CatTemplate1" DataType="{x:Type local:Category}">
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="3" CornerRadius="3">
+                <TextBlock Width="150" Margin="3" >
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}" >
+                            <Binding Path="CatName"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Border>
+        </DataTemplate>
+        <DataTemplate  x:Key="ProTemplate1" DataType="{x:Type local:NhaSanXuat}">
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="3" CornerRadius="3">
+                <TextBlock Width="150" Margin="3">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}">
+                            <Binding Path="TenNhaSanXuat"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Background="RoyalBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition />
+            <RowDefinition Height="30" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center">Loại sản phẩm</TextBlock>
+        <ListView Grid.Row="1" Name="lvCat" ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource CatTemplate}" />
+        
+        <TextBlock Grid.Row="2" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center">Nhà sản xuất</TextBlock>
+        <ListView Grid.Row="3" Name="lvPro" ItemsSource="{Binding NhanSanXuats}" ItemTemplate="{StaticResource ProTemplate}" />
+    </Grid>
+</UserControl>

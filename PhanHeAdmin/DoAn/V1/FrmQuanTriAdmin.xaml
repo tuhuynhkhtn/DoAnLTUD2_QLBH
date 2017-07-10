@@ -1,0 +1,643 @@
+﻿<Window x:Class="V1.FrmQuanTriAdmin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:V1"
+        xmlns:u="clr-namespace:V1.Ultilities"
+        xmlns:m="clr-namespace:V1.Model"
+        xmlns:uc="clr-namespace:V1.UC"
+        xmlns:t="clr-namespace:V1.Template"
+        xmlns:flowdoc="clr-namespace:FlowDocumentApp.FlowDocuments"
+        xmlns:ctk="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+       
+
+        mc:Ignorable="d"
+        Title="Quản trị của Admin" Height="700" Width="990">
+
+    <Window.Resources>
+        <m:MyDataContext x:Key="myDB" />
+        <u:PassThroughConverter x:Key="ptc"/>
+        <u:ImgPathConverter x:Key="ipc" />
+        <u:TinhTrangGiaoConverter x:Key="ttgc"/>
+        <t:OrderTemplateSelector x:Key="templateSelector" DefaultTemplate="{StaticResource DefaultTemplate}" HighlightTemplate="{StaticResource HighlightTemplate}" />
+        
+        <Style x:Key="TabItemStyle">
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+            <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+            <Setter Property="TextBlock.Foreground" Value="Blue"/>
+        </Style>
+
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
+            <Border Name="BorderCuaButton" BorderBrush="Black" BorderThickness="1" 
+                    CornerRadius="2" Background="#eeeeee"
+                    VerticalAlignment="Center" Width="90">
+                <ContentPresenter HorizontalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="BorderCuaButton" Property="Background" Value="#a4c8f0"/>
+                    <Setter TargetName="BorderCuaButton" Property="BorderBrush" Value="#005d9a"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BorderCuaButton" Property="Background" Value="#a4c8f0"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style x:Key="TextBlockTemplate" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextBlock.HorizontalAlignment" Value="Right" />
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+            <Setter Property="TextBlock.Margin" Value="0,0,9,0" />
+        </Style>
+
+        <Style x:Key="TextBoxTemplate" TargetType="{x:Type TextBox}">
+            <Setter Property="TextBox.VerticalAlignment" Value="Center" />
+            <Setter Property="TextBox.Margin" Value="0,0,9,0" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <TabControl>
+            <TabItem Header="Quản lý sản phẩm">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header="Danh sách sản phẩm">
+                        <ListBox Name="lbSanPham" ItemsSource="{Binding Source={StaticResource myDB}, Path=ListPro}" IsSynchronizedWithCurrentItem="True">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                <Binding Path="ProID"/>
+                                                <Binding Path="ProName"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Chức năng">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="39" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="90" />
+                                    <RowDefinition Height="150" />
+                                    <RowDefinition  />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="Tên sản phẩm:" />
+                                <TextBlock Grid.Row="1" Text="Giá(VNĐ):"  />
+                                <TextBlock Grid.Row="2" Text="Danh mục:" />
+                                <TextBlock Grid.Row="3" Text="Số lượng:"  />
+                                <TextBlock Grid.Row="4" Text="Ngày nhập:" />
+                                <TextBlock Grid.Row="5" Text="Xuất xứ:"  />
+                                <TextBlock Grid.Row="6" Text="Loại:" />
+                                <TextBlock Grid.Row="7" Text="Tên nhà sản xuất:"  />
+                                <TextBlock Grid.Row="8" Text="Mô tả nagắn:" />
+                                <TextBlock Grid.Row="9" Text="Mô tả:"  />
+                                <TextBlock Grid.Row="10" Text="Hình sản phẩm:"  />
+
+                                <TextBox Name="txtTenSP" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.ProName}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" />
+                                <TextBox Name="txtGia" Text="{Binding ElementName=lbSanPham, StringFormat={}{0:0,0}, Path=SelectedItem.Price}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" />
+                                <TextBox Name="txtDanhMuc" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.CatID}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" />
+                                <TextBox Name="txtSoLuong" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.Quantity}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" />
+                                <!--<TextBox Name="txtNgayNhap" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.NgayNhap}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" />-->
+                                <DatePicker x:Name="dtpNgayNhap" Margin="5" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.NgayNhap}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" />
+                                <TextBox Name="txtXuatXu" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.XuatXu}" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" />
+                                <TextBox Name="txtLoai" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.Loai}" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" />
+                                <TextBox Name="txtTenNhaSanXuat" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.TenNhaSanXuat}" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center" />
+                                <TextBox Name="txtMoTaNgan" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.TinyDes}" Grid.Column="1" Grid.Row="8" VerticalAlignment="Center" />
+                                <TextBox Name="txtMoTa" Text="{Binding ElementName=lbSanPham, Path=SelectedItem.FullDes}" Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" TextWrapping="Wrap" />
+                                <Image Grid.Column="1" Grid.Row="10" Width="200" Height="150" Source="{Binding ElementName=lbSanPham, Path=SelectedItem.ProID, Converter={StaticResource ipc}}"/>
+                            </Grid>
+                            
+                            <WrapPanel HorizontalAlignment="Center" Margin="0,19,0,0">
+                                <Button Name="btnThemSanPham" Margin="9" Template="{StaticResource ButtonTemplate}">Thêm</Button>
+                                <Button Name="btnXoaSanPham" Margin="9" Template="{StaticResource ButtonTemplate}">Xóa</Button>
+                                <Button Name="btnCapNhatMH" Margin="9" Template="{StaticResource ButtonTemplate}">Cập nhật</Button>
+                            </WrapPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Quản lý loại sản phẩm">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header="Danh sách loại sản phẩm">
+                        <ListBox Name="lbLoaiSanPham" ItemsSource="{Binding Source={StaticResource myDB}, Path=ListCat}" IsSynchronizedWithCurrentItem="True">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                <Binding Path="CatID"/>
+                                                <Binding Path="CatName"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Chức năng">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+
+                                <!--<TextBlock Grid.Row="0" Text="Mã loại sản phẩm:" />-->
+                                <TextBox Name="txtIDLoaiSP" Text="{Binding ElementName=lbLoaiSanPham, Path=SelectedItem.CatID}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" IsReadOnly="True" Visibility="Hidden" />
+                                <TextBlock Grid.Row="1" Text="Tên loại sản phẩm:" />
+                                <TextBox Name="txtTenLoaiSP" Text="{Binding ElementName=lbLoaiSanPham, Path=SelectedItem.CatName}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" />
+                                <Label Name="lblErrorCat" Grid.Row="2" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding ElementName=txtUsername,Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                            </Grid>
+                            <WrapPanel HorizontalAlignment="Center">
+                                <!--<Button Name="btnThemLoaiSanPham" Margin="9" Template="{StaticResource ButtonTemplate}" Click="btnThemLoaiSanPham_Click">Thêm</Button>-->
+                                <!--<Button Name="btnXoaLoaiSanPham" Margin="9" Template="{StaticResource ButtonTemplate}" Click="btnXoaLoaiSanPham_Click">Xóa</Button>-->
+                                <!--<Button Name="btnCapNhatLoaiSanPham" Margin="9" Template="{StaticResource ButtonTemplate}" Click="btnCapNhatLoaiSanPham_Click">Cập nhật</Button>-->
+                                <Button Name="btnThemLoaiSanPham" Margin="9" Template="{StaticResource ButtonTemplate}" Tag="{Binding CatID}" Content="Thêm" Command="u:Commands.ButtonAddCatCmd" >
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ptc}">
+                                            <!--<Binding Path="Text" ElementName="txtIDLoaiSP" />-->
+                                            <Binding Path="Text" ElementName="txtTenLoaiSP" />
+                                            <Binding Path="Tag" ElementName="btnThemLoaiSanPham" />
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Name="btnXoaLoaiSanPham" Margin="9" Template="{StaticResource ButtonTemplate}" Tag="{Binding CatID}" Content="Xóa" Command="u:Commands.ButtonDeleteCatCmd" >
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ptc}">
+                                            <Binding Path="Text" ElementName="txtIDLoaiSP" />
+                                            <Binding Path="Text" ElementName="txtTenLoaiSP" />
+                                            <Binding Path="Tag" ElementName="btnXoaLoaiSanPham" />
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Name="btnCapNhatLoaiSanPham" Margin="9" Template="{StaticResource ButtonTemplate}" Tag="{Binding CatID}" Content="Cập nhật" Command="u:Commands.ButtonUpdateCatCmd" >
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ptc}">
+                                            <Binding Path="Text" ElementName="txtIDLoaiSP" />
+                                            <Binding Path="Text" ElementName="txtTenLoaiSP" />
+                                            <Binding Path="Tag" ElementName="btnCapNhatLoaiSanPham" />
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <!--<Button Name="btnLoadLoaiSanPham" Margin="9" Template="{StaticResource ButtonTemplate}" Click="btnLoadLoaiSanPham_Click">Load</Button>-->
+                            </WrapPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Quản lý nhà sản xuất">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header="Danh sách nhà sản xuất">
+                        <ListBox Name="lbNhaSanXuat" ItemsSource="{Binding Source={StaticResource myDB}, Path=ListNSX}" IsSynchronizedWithCurrentItem="True">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                <Binding Path="IDNhaSanXuat"/>
+                                                <Binding Path="TenNhaSanXuat"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Chức năng">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+
+                                <!--<TextBlock Grid.Row="0" Text="Mã nhà sản xuất:" />-->
+                                <TextBox Name="txtIDNSX" Text="{Binding ElementName=lbNhaSanXuat, Path=SelectedItem.IDNhaSanXuat}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" IsReadOnly="True" Visibility="Hidden"  />
+                                <TextBlock Grid.Row="1" Text="Tên nhà sản xuất:" />
+                                <TextBox Name="txtTenNSX" Text="{Binding ElementName=lbNhaSanXuat, Path=SelectedItem.TenNhaSanXuat}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" />
+                            </Grid>
+                            <WrapPanel HorizontalAlignment="Center">
+                                <!--<Button Name="btnThemNSX" Margin="9" Template="{StaticResource ButtonTemplate}" Click="btnThemNSX_Click">Thêm</Button>
+                                <Button Name="btnXoaNSX" Margin="9" Template="{StaticResource ButtonTemplate}" Click="btnXoaNSX_Click">Xóa</Button>
+                                <Button Name="btnCapNhatNSX" Margin="9" Template="{StaticResource ButtonTemplate}" Click="btnCapNhatNSX_Click">Cập nhật</Button>-->
+                                <Button Name="btnThemNSX" Margin="9" Template="{StaticResource ButtonTemplate}" Tag="{Binding IDNhaSanXuat}" Content="Thêm" Command="u:Commands.ButtonAddNSXCmd" >
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ptc}">
+                                            <Binding Path="Text" ElementName="txtTenNSX" />
+                                            <Binding Path="Tag" ElementName="btnThemNSX" />
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Name="btnXoaNSX" Margin="9" Template="{StaticResource ButtonTemplate}" Tag="{Binding CatID}" Content="Xóa" Command="u:Commands.ButtonDeleteNSXCmd" >
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ptc}">
+                                            <Binding Path="Text" ElementName="txtIDNSX" />
+                                            <Binding Path="Text" ElementName="txtTenNSX" />
+                                            <Binding Path="Tag" ElementName="btnXoaNSX" />
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Name="btnCapNhatNSX" Margin="9" Template="{StaticResource ButtonTemplate}" Tag="{Binding CatID}" Content="Cập nhật" Command="u:Commands.ButtonUpdateNSXCmd" >
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ptc}">
+                                            <Binding Path="Text" ElementName="txtIDNSX" />
+                                            <Binding Path="Text" ElementName="txtTenNSX" />
+                                            <Binding Path="Tag" ElementName="btnCapNhatNSX" />
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                </Button>
+                            </WrapPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Quản lý đơn hàng">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header="Danh sách đơn hàng">
+                        <ListBox Name="lbDonHang" ItemsSource="{Binding Source={StaticResource myDB}, Path=ListOrder}" IsSynchronizedWithCurrentItem="True" ItemTemplateSelector="{StaticResource templateSelector}" >
+                            <!--<ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                <Binding Path="OrderID"/>
+                                                <Binding Path="OrderDate"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>-->
+                        </ListBox>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Chức năng">
+                        <StackPanel>
+                            <Grid>
+                                <!--<Grid.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Control.HorizontalAlignment" Value="Right" />
+                                        <Setter Property="Control.VerticalAlignment" Value="Center" />
+                                        <Setter Property="Control.Margin" Value="0,0,9,0" />
+                                    </Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="Control.VerticalAlignment" Value="Center" />
+                                        <Setter Property="Grid.Column" Value="1" />
+                                        <Setter Property="Grid.Margin" Value="0,0,9,0" />
+                                    </Style>
+                                </Grid.Resources>-->
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="Mã đơn hàng:" />
+                                <TextBox Name="txtIDDonHang" Text="{Binding ElementName=lbDonHang, Path=SelectedItem.OrderID}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" IsReadOnly="True" />
+                                <!--<TextBlock Grid.Row="0" Style="{StaticResource TextBlockTemplate}" Text="Ngày đặt hàng:" />-->
+                                <TextBlock Grid.Row="1" Text="Ngày đặt hàng:" />
+                                <TextBox Name="txtNgayDat" Text="{Binding ElementName=lbDonHang, Path=SelectedItem.OrderDate}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" IsReadOnly="True" />
+                                <TextBlock Grid.Row="2" Text="Mã khách hàng:" />
+                                <TextBox Name="txtMaKhachHang" Text="{Binding ElementName=lbDonHang, Path=SelectedItem.UserID}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" IsReadOnly="True" />
+                                <TextBlock Grid.Row="3" Text="Tổng tiền:" />
+                                <TextBox Name="txtTongTien" Text="{Binding ElementName=lbDonHang, StringFormat={}{0:0,0 đ}, Path=SelectedItem.Total}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" IsReadOnly="True" />
+                                <TextBlock Grid.Row="4" Text="Tình trạng giao:" />
+                                <TextBox Name="txtTinhTrangGiao" Text="{Binding ElementName=lbDonHang, Converter={StaticResource ttgc}, Path=SelectedItem.TinhTrangGiao}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" IsReadOnly="True" />
+                            </Grid>
+                            <WrapPanel HorizontalAlignment="Center">
+                                <!--<Button Name="btnChuaGiao" Margin="9" Template="{StaticResource ButtonTemplate}" Click="btnChuaGiao_Click">Chưa giao</Button>
+                                <Button Name="btnDaGiao" Margin="9" Template="{StaticResource ButtonTemplate}" Click="btnDaGiao_Click">Đã giao</Button>-->
+                                <Button Name="btnChuaGiao" Margin="9" Template="{StaticResource ButtonTemplate}" Tag="{Binding OrderID}" Content="Chưa giao" Command="u:Commands.ButtonOrderChuaGiaoCmd" >
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ptc}">
+                                            <Binding Path="Text" ElementName="txtIDDonHang" />
+                                            <Binding Path="Text" ElementName="txtTinhTrangGiao" />
+                                            <Binding Path="Tag" ElementName="btnChuaGiao" />
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Name="btnDaGiao" Margin="9" Template="{StaticResource ButtonTemplate}" Tag="{Binding OrderID}" Content="Đã giao" Command="u:Commands.ButtonOrderDaGiaoCmd" >
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ptc}">
+                                            <Binding Path="Text" ElementName="txtIDDonHang" />
+                                            <Binding Path="Text" ElementName="txtTinhTrangGiao" />
+                                            <Binding Path="Tag" ElementName="btnDaGiao" />
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                </Button>
+                            </WrapPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Quản lý người dùng">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header="Danh sách người dùng">
+                        <ListBox Name="lbNguoiDung" ItemsSource="{Binding Source={StaticResource myDB}, Path=ListUser}" IsSynchronizedWithCurrentItem="True" ItemTemplate="{StaticResource UserTemplate}" >
+                            <!--<ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                <Binding Path="f_ID"/>
+                                                <Binding Path="f_Username"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>-->
+                        </ListBox>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Lịch sử mua hàng của người dùng">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Mã khách hàng:" VerticalAlignment="Center" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtUserID" Text="{Binding ElementName=lbNguoiDung, Path=SelectedItem.f_ID}" VerticalAlignment="Center" IsReadOnly="True" TextChanged="txtUserID_TextChanged" />
+                            <ListBox Name="lbLichSuMuaHang" Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Source={StaticResource myDB}, Path=ListLichSuMuaHang}" IsSynchronizedWithCurrentItem="True" ItemTemplate="{StaticResource LichSuMuaHangTemplate}" >
+                                <!--<ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                <Binding Path="OrderID"/>
+                                                <Binding Path="OrderDate"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>-->
+                            </ListBox>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Truy cập nhanh">
+                <Grid>
+                    <TabControl>
+                        <TabItem Header="Sản phẩm mới nhất">
+                                <WrapPanel Grid.Row="1">
+                                    <ListView Name="lvProNew" ItemTemplate="{StaticResource ProTemplate}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="4" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ListView>
+                                </WrapPanel>
+                            </TabItem>
+                            <TabItem Header="Sản phẩm bán chạy nhất">
+                                <WrapPanel Grid.Row="1">
+                                    <ListView Name="lvProOrder" ItemTemplate="{StaticResource ProTemplate}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="4" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ListView>
+                                </WrapPanel>
+                            </TabItem>
+                        <TabItem Header="Sản phẩm xem nhiều nhất">
+                            <WrapPanel Grid.Row="1">
+                                <ListView Name="lvProView" ItemTemplate="{StaticResource ProTemplate}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="4" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ListView>
+                            </WrapPanel>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Báo cáo và thống kê">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"></StackPanel>
+                    <FlowDocumentScrollViewer Grid.Row="1">
+                        <FlowDocument>
+                            <Paragraph TextAlignment="Center">
+                                <Bold FontSize="32">Báo cáo doanh thu</Bold>
+                            </Paragraph>
+
+                            <!--<flowdoc:ItemsContent ItemsSource="{Binding}" >
+                                <flowdoc:ItemsContent.ItemsPanel>
+                                    <DataTemplate>
+                                        <flowdoc:Fragment>
+                                            <Table BorderThickness="1" BorderBrush="Black">
+                                                <TableRowGroup flowdoc:Attached.IsItemsHost="True">
+                                                    <TableRow Background="LightBlue">
+                                                        <TableCell>
+                                                            <Paragraph>Mã đơn hàng</Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>Tổng tiền</Paragraph>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableRowGroup>
+                                            </Table>
+                                        </flowdoc:Fragment>
+                                    </DataTemplate>
+                                </flowdoc:ItemsContent.ItemsPanel>
+                                <flowdoc:ItemsContent.ItemTemplate>
+                                    <DataTemplate>
+                                        <flowdoc:Fragment>
+                                            <TableRow>
+                                                <TableCell>
+                                                    <Paragraph>
+                                                        <flowdoc:BindableRun BoundText="{Binding OrderID}" />
+                                                    </Paragraph>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Paragraph>
+                                                        <flowdoc:BindableRun BoundText="{Binding Total, StringFormat={}{0:0,0 đ}}"/>
+                                                    </Paragraph>
+                                                </TableCell>
+                                            </TableRow>
+                                        </flowdoc:Fragment>
+                                    </DataTemplate>
+                                </flowdoc:ItemsContent.ItemTemplate>
+                            </flowdoc:ItemsContent>-->
+
+                            <!--<flowdoc:ItemsContent ItemsSource="{Binding}" >
+                                <flowdoc:ItemsContent.ItemsPanel>
+                                    <DataTemplate>
+                                        <flowdoc:Fragment>
+                                            <Table BorderThickness="1" BorderBrush="Black">
+                                                <TableRowGroup flowdoc:Attached.IsItemsHost="True">
+                                                    <TableRow Background="SkyBlue">
+                                                        <TableCell ColumnSpan="4" TextAlignment="Center">
+                                                            <Paragraph FontSize="24pt" FontWeight="Bold">Doanh thu theo mục</Paragraph>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableRowGroup>
+                                                <TableRowGroup flowdoc:Attached.IsItemsHost="True">
+                                                    <TableRow Background="LightBlue">
+                                                        <TableCell>
+                                                            <Paragraph>Mã đơn hàng</Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>Tổng tiền</Paragraph>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableRowGroup>
+                                            </Table>
+                                        </flowdoc:Fragment>
+                                    </DataTemplate>
+                                </flowdoc:ItemsContent.ItemsPanel>
+                                <flowdoc:ItemsContent.ItemTemplate>
+                                    <DataTemplate>
+                                        <flowdoc:Fragment>
+                                            <TableRow>
+                                                <TableCell>
+                                                    <Paragraph>
+                                                        <flowdoc:BindableRun BoundText="{Binding OrderID}" />
+                                                    </Paragraph>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Paragraph>
+                                                        <flowdoc:BindableRun BoundText="{Binding Total, StringFormat={}{0:0,0 đ}}"/>
+                                                    </Paragraph>
+                                                </TableCell>
+                                            </TableRow>
+                                        </flowdoc:Fragment>
+                                    </DataTemplate>
+                                </flowdoc:ItemsContent.ItemTemplate>
+                            </flowdoc:ItemsContent>-->
+
+                            <flowdoc:ItemsContent ItemsSource="{Binding}" >
+
+                                <BlockUIContainer>
+                                    <ctk:Chart Height="262" HorizontalAlignment="Left" 
+            Margin="33,0,0,620" Name="ColumnChart1" Title="Department"
+            VerticalAlignment="Bottom" Width="410">
+                                        <ctk:ColumnSeries DependentValuePath="Value"  IndependentValuePath="Key" ItemsSource="{Binding}"
+            IsSelectionEnabled="True"></ctk:ColumnSeries>
+                                    </ctk:Chart>
+                                </BlockUIContainer>
+                                
+                                <flowdoc:ItemsContent.ItemsPanel>
+                                    <DataTemplate>
+                                        <flowdoc:Fragment>
+                                            <Table BorderThickness="1" BorderBrush="Black">
+                                                <TableRowGroup flowdoc:Attached.IsItemsHost="True">
+                                                    <TableRow Background="SkyBlue">
+                                                        <TableCell ColumnSpan="4" TextAlignment="Center">
+                                                            <Paragraph FontSize="24pt" FontWeight="Bold">Doanh thu theo loại sản phẩm</Paragraph>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableRowGroup>
+                                                <TableRowGroup flowdoc:Attached.IsItemsHost="True">
+                                                    <TableRow Background="LightBlue">
+                                                        <TableCell ColumnSpan="2">
+                                                            <Paragraph>Tên sản phẩm</Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>Tổng tiền</Paragraph>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableRowGroup>
+                                            </Table>
+                                        </flowdoc:Fragment>
+                                    </DataTemplate>
+                                </flowdoc:ItemsContent.ItemsPanel>
+                                <flowdoc:ItemsContent.ItemTemplate>
+                                    <DataTemplate>
+                                        <flowdoc:Fragment>
+                                            <TableRow>
+                                                <TableCell ColumnSpan="2">
+                                                    <Paragraph>
+                                                        <flowdoc:BindableRun BoundText="{Binding CatID}" />
+                                                    </Paragraph>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Paragraph>
+                                                        <flowdoc:BindableRun BoundText="{Binding TongTien, StringFormat={}{0:0,0 đ}}"/>
+                                                    </Paragraph>
+                                                </TableCell>
+                                            </TableRow>
+                                        </flowdoc:Fragment>
+                                    </DataTemplate>
+                                </flowdoc:ItemsContent.ItemTemplate>
+                            </flowdoc:ItemsContent>
+
+                        </FlowDocument>
+                    </FlowDocumentScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
